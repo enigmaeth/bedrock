@@ -438,6 +438,7 @@ PIPELINE_CSS = {
     },
     'firefox_new_horizon_scene1': {
         'source_filenames': (
+            'css/base/mozilla-modal.less',
             'css/newsletter/fxnewsletter-subscribe.less',
             'css/firefox/new/horizon/scene1.less',
         ),
@@ -1192,6 +1193,7 @@ PIPELINE_JS = {
     },
     'firefox_new_scene1': {
         'source_filenames': (
+            'js/base/mozilla-modal.js',
             'js/firefox/new/scene1.js',
         ),
         'output_filename': 'js/firefox_new_scene1-bundle.js',

@@ -8,7 +8,7 @@ from django.test import override_settings
 from django.test.client import RequestFactory
 
 from bedrock.base.urlresolvers import reverse
-from mock import patch
+from mock import ANY, patch
 from nose.tools import eq_, ok_
 
 from bedrock.firefox import views
@@ -154,27 +154,27 @@ class TestFirefoxNew(TestCase):
         req = RequestFactory().get('/firefox/new/')
         req.locale = 'en-US'
         views.new(req)
-        render_mock.assert_called_once_with(req, 'firefox/new/horizon/scene1.html')
+        render_mock.assert_called_once_with(req, 'firefox/new/horizon/scene1.html', ANY)
 
     def test_scene_2_template(self, render_mock):
         req = RequestFactory().get('/firefox/new/?scene=2')
         req.locale = 'en-US'
         views.new(req)
-        render_mock.assert_called_once_with(req, 'firefox/new/horizon/scene2.html')
+        render_mock.assert_called_once_with(req, 'firefox/new/horizon/scene2.html', ANY)
 
     @patch.object(views, 'lang_file_is_active', lambda *x: False)
     def test_scene_1_old_template(self, render_mock):
         req = RequestFactory().get('/firefox/new/')
         req.locale = 'de'
         views.new(req)
-        render_mock.assert_called_once_with(req, 'firefox/new/scene1.html')
+        render_mock.assert_called_once_with(req, 'firefox/new/scene1.html', ANY)
 
     @patch.object(views, 'lang_file_is_active', lambda *x: False)
     def test_scene_2_old_template(self, render_mock):
         req = RequestFactory().get('/firefox/new/?scene=2')
         req.locale = 'de'
         views.new(req)
-        render_mock.assert_called_once_with(req, 'firefox/new/scene2.html')
+        render_mock.assert_called_once_with(req, 'firefox/new/scene2.html', ANY)
 
 
 class TestWin10WelcomeView(TestCase):

@@ -63,6 +63,7 @@
            href="{{ plat.download_link }}"{% if plat.download_link_direct %}
            data-direct-link="{{ plat.download_link_direct }}"{% endif %}
            data-link-type="download"
+           data-display-name="{{ plat.os_arch_pretty or plat.os_pretty }}"
            {% if plat.os == 'android' %}data-download-os="Android"
            {% elif plat.os == 'ios' %}data-download-os="iOS"
            {% else %}data-download-os="Desktop"{% endif %}>

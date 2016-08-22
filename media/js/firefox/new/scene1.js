@@ -9,6 +9,89 @@
     var client = window.Mozilla.Client;
     var state; // track page state
 
+    // check page version for tests
+    var version = Number($('#masthead').data('version'));
+
+    // duplicate and move /all link for desktop test
+    var setupTest = function(version) {
+        var $dlButton = $('#download-button-desktop-release');
+        var $newLink;
+        var linkCss;
+
+        // make sure desktop download button exists and user is on a recognized platform
+        if ($dlButton.length && $dlButton.find('.unrecognized-download:visible').length === 0) {
+            linkCss = {
+                'display': 'inline-block',
+                'paddingTop': '10px'
+            };
+
+            if (version === 1) {
+                // snag the link from the footer
+                $newLink = $('#fx-footer-links-desktop-all').clone();
+
+                // make footer element was found
+                if ($newLink.length) {
+                    $newLink.css(linkCss).data({
+                        // GTM stuff?
+                        'foo': 'bar',
+                        'flim': 'flam'
+                    });
+                }
+            } else if (version === 2) {
+                // pull the nojs links out of the modal's download button
+                var $directLis = $('#fx-modal-download .nojs-download li').remove();
+
+                // container to hold direct download links in the modal
+                var $modalDirectDownloadList = $('#fx-modal-direct-downloads');
+
+                // os's to filter out of modal (as we have the app store specific buttons displayed already)
+                var mobileOs = ['android', 'ios'];
+
+                // remove button-y CSS
+                $directLis.find('a').removeClass('button green').data({
+                    // GTM stuff?
+                    'boo': 'far',
+                    'film': 'falm"'
+                });
+
+                // place 'other platform' links in the modal
+                $directLis.each(function(i, li) {
+                    // do not include mobileOs's
+                    if (mobileOs.indexOf($(li).find('a').data('download-os').toLowerCase()) === -1) {
+                        $modalDirectDownloadList.append(li);
+                    }
+                });
+
+                // get platform display name
+                var platformDisplayName = $dlButton.find('.download-list li:visible a').data('display-name');
+
+                // make sure user is on a supported platform
+                if (platformDisplayName) {
+                    // put "for {user's os}" text underneath modal primary dl button
+                    $('#fx-modal-user-platform').text('for ' + platformDisplayName);
+                } else {
+                    $('#fx-modal-user-platform').remove();
+                }
+
+                // conjure up a new link that will trigger the modal
+                $newLink = $('<a href="" id="fx-modal-link">Download Firefox for another platform</a>');
+
+                $newLink.css(linkCss).on('click', function(e) {
+                    e.preventDefault();
+
+                    // open up said modal
+                    Mozilla.Modal.createModal(this, $('#fx-modal'));
+                });
+            }
+
+            // place the new link (modal or direct to /firefox/all) underneath
+            // the main download button
+            $dlButton.append($newLink);
+        }
+    };
+
+    setupTest(version);
+
     var uiTourSendEvent = function(action, data) {
         var event = new CustomEvent('mozUITour', {
             bubbles: true,
