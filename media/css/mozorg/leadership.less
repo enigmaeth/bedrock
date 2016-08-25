@@ -6,7 +6,6 @@
 @import '../pebbles/components/masthead.less';
 @import '../pebbles/components/footer.less';
 @import '../pebbles/components/modal.less';
-@import '../pebbles/includes/animations.less';
 
 #masthead {
     background: @color-mozred;
@@ -22,6 +21,7 @@
         }
     }
 }
+
 
 // Header
 .snapshot-header {
@@ -41,6 +41,8 @@
     }
 }
 
+
+// Snapshots, pseudo-Polaroid
 .snap {
     display: inline-block;
     background: #fff;
@@ -67,6 +69,8 @@
     }
 }
 
+
+// Foreground layer, the three main snapshots
 .foreground {
     display: none;
 
@@ -145,51 +149,40 @@
     }
 }
 
-@supports ((animation-name: develop) or (-webkit-animation-name: develop)) and ((filter: invert(40%)) or (-webkit-filter: invert(40%))) {
+
+// Simulate a developing Polaroid
+@supports (animation-name: develop) and (filter: invert(40%)) {
     .foreground .snap img {
         opacity: .1;
         .animation(develop 2500ms ease-in forwards);
-        -webkit-filter: invert(40%) sepia(80%);
-                filter: invert(40%) sepia(80%);
+        filter: invert(40%) sepia(80%);
     }
 
     .foreground .shot-one img {
-        -webkit-animation-delay: 2600ms;
-                animation-delay: 2600ms;
+        animation-delay: 2600ms;
     }
 
     .foreground .shot-two img {
-        -webkit-animation-delay: 1800ms;
-                animation-delay: 1800ms;
+        animation-delay: 1800ms;
     }
 
     .foreground .shot-three img {
-        -webkit-animation-delay: 3200ms;
-                animation-delay: 3200ms;
-    }
-
-    @-webkit-keyframes develop {
-        0%   { -webkit-filter: invert(40%) sepia(100%); filter: invert(40%) sepia(100%); opacity: .1; }
-        25%  { -webkit-filter: invert(20%) sepia(90%); filter: invert(20%) sepia(90%); opacity: .25; }
-        50%  { -webkit-filter: invert(10%) sepia(80%); filter: invert(10%) sepia(80%); opacity: .5; }
-        75%  { -webkit-filter: invert(0) sepia(60%); filter: invert(0) sepia(60%); opacity: .75; }
-        85%  { -webkit-filter: invert(0) sepia(40%); filter: invert(0) sepia(40%); opacity: .85; }
-        100% { -webkit-filter: invert(0) sepia(0); filter: invert(0) sepia(0); opacity: 1; }
+        animation-delay: 3200ms;
     }
 
     @keyframes develop {
-        0%   { -webkit-filter: invert(40%) sepia(100%); filter: invert(40%) sepia(100%); opacity: .1; }
-        25%  { -webkit-filter: invert(20%) sepia(90%); filter: invert(20%) sepia(90%); opacity: .25; }
-        50%  { -webkit-filter: invert(10%) sepia(80%); filter: invert(10%) sepia(80%); opacity: .5; }
-        75%  { -webkit-filter: invert(0) sepia(60%); filter: invert(0) sepia(60%); opacity: .75; }
-        85%  { -webkit-filter: invert(0) sepia(40%); filter: invert(0) sepia(40%); opacity: .85; }
-        100% { -webkit-filter: invert(0) sepia(0); filter: invert(0) sepia(0); opacity: 1; }
+        0%   { filter: invert(40%) sepia(100%); opacity: .1; }
+        25%  { filter: invert(20%) sepia(90%); opacity: .25; }
+        50%  { filter: invert(10%) sepia(80%); opacity: .5; }
+        75%  { filter: invert(0) sepia(60%); opacity: .75; }
+        85%  { filter: invert(0) sepia(40%); opacity: .85; }
+        100% { filter: invert(0) sepia(0); opacity: 1; }
     }
 
 }
 
 
-
+// Background layer of snapshots
 .background {
     display: none; // hidden on small screens
 
@@ -395,11 +388,14 @@
 
 }
 
+
+// Page header/intro, separate from the photo header above
 .page-header {
     background: @color-mozgray;
     color: #fff;
     padding: 20px 0;
 }
+
 
 // Navigation
 #page-nav {
@@ -584,6 +580,10 @@
         }
     }
 
+    &.has-bio .since {
+        .hidden;
+    }
+
     &.has-bio:hover,
     &.has-bio:focus {
         cursor: pointer;
@@ -657,6 +657,7 @@
     padding: 0 10px 40px;
     width: auto;
 
+    .since,
     .profile,
     .person-bio {
         display: block;
@@ -823,6 +824,7 @@
         font-style: italic;
     }
 
+    .since,
     .profile,
     .person-bio {
         display: block;
@@ -862,71 +864,3 @@
     }
 
 }
-
-/*
-#modal {
-    min-width: @width-phone;
-
-    .window {
-        margin: 0 30px;
-    }
-
-    .inner {
-        background: #fff;
-        padding: 20px 40px;
-        position: relative;
-
-        @media @mq-phone {
-            padding: 20px;
-        }
-    }
-
-
-
-    .window .inner > header {
-        .font-size(20px);
-        background: @color-mozred;
-        font-family: inherit;
-        margin: -20px -40px 20px;
-        padding: .5em 40px;
-        text-align: left;
-
-        h1 {
-            margin: 0;
-        }
-
-        // Redundancy here because mozilla-modal.less is desktop-first
-        @media @mq-phone {
-            height: auto;
-            min-height: 40px;
-            overflow: visible;
-            text-indent: 0;
-            white-space: normal;
-            margin: -20px -20px 20px;
-            padding-left: 20px;
-
-            h1 {
-                .font-size(24px);
-            }
-        }
-
-        @media @mq-phone-wide {
-            height: auto;
-            min-height: 40px;
-            overflow: visible;
-            text-indent: 0;
-            white-space: normal;
-
-            h1 {
-                .font-size(32px);
-            }
-        }
-
-    }
-
-    .window .inner #modal-close {
-        top: 10px;
-    }
-
-}
-*/
