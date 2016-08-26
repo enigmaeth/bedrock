@@ -7,6 +7,17 @@
 @import '../pebbles/components/footer.less';
 @import '../pebbles/components/modal.less';
 
+
+@font-face {
+    font-family: 'FA-Icons-Contact';
+    src: url('/media/fonts/icons-contact.eot?#iefix') format('embedded-opentype'),
+         url('/media/fonts/icons-contact.woff') format('woff'),
+         url('/media/fonts/icons-contact.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 #masthead {
     background: @color-mozred;
     color: #fff;
@@ -545,7 +556,7 @@
     .title,
     .since,
     .note,
-    .profile {
+    .elsewhere {
         .font-size(12px);
     }
 
@@ -557,13 +568,34 @@
         color: @color-mozred;
     }
 
+    .elsewhere {
+        margin-top: 1em;
+
+        a {
+            padding-left: 20px;
+            position: relative;
+
+            &:before {
+                color: @color-link;
+                font: 105% 'FA-Icons-Contact';
+                position: absolute;
+                left: 0;
+                top: .125em;
+            }
+        }
+
+        a.website:before { content: '\e803'; } /* '' */
+        a.twitter:before { content: '\e804'; } /* '' */
+        a.book:before { content: '\e80e'; } /* '' */
+    }
+
     .callout {
         padding: 20px 20px 5px;
         background: #efefef;
         font-style: italic;
     }
 
-    .profile,
+    .elsewhere,
     .person-bio {
         .hidden;
     }
@@ -657,8 +689,7 @@
     padding: 0 10px 40px;
     width: auto;
 
-    .since,
-    .profile,
+    .elsewhere,
     .person-bio {
         display: block;
     }
@@ -824,8 +855,7 @@
         font-style: italic;
     }
 
-    .since,
-    .profile,
+    .elsewhere,
     .person-bio {
         display: block;
     }
