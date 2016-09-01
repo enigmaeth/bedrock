@@ -1090,6 +1090,8 @@ CSP_IMG_SRC = (
     '*.mozilla.net',
     '*.mozilla.org',
     '*.optimizely.com',
+    'www.googletagmanager.com',
+    'www.google-analytics.com',
 )
 CSP_SCRIPT_SRC = (
     "'self'",
@@ -1098,6 +1100,8 @@ CSP_SCRIPT_SRC = (
     '*.mozilla.net',
     '*.optimizely.com',
     'optimizely.s3.amazonaws.com',
+    'www.googletagmanager.com',
+    'www.google-analytics.com',
 )
 CSP_STYLE_SRC = (
     "'self'",
@@ -1107,7 +1111,11 @@ CSP_STYLE_SRC = (
 )
 CSP_FRAME_SRC = (
     '*.optimizely.com',
+    'www.googletagmanager.com',
+    'www.google-analytics.com',
 )
 CSP_CONNECT_SRC = (
     '*.optimizely.com',
+    'www.googletagmanager.com',
+    'www.google-analytics.com',
 )
